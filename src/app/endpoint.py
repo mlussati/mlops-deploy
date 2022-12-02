@@ -1,3 +1,4 @@
+import os
 import pickle
 from sklearn.linear_model import LinearRegression
 from flask import Flask, request, jsonify
@@ -5,11 +6,11 @@ from flask_basicauth import BasicAuth
 from textblob import TextBlob
 
 colunas = ['tamanho', 'ano', 'garagem']
-modelo = pickle.load(open('models/modelo.sav', 'rb'))
+modelo = pickle.load(open('../../models/modelo.sav', 'rb'))
 
 app = Flask("meu_app")
-app.config['BASIC_AUTH_USERNAME'] = ''
-app.config['BASIC_AUTH_PASSWORD'] = ''
+app.config['BASIC_AUTH_USERNAME'] = os.environ.get('BASIC_AUTH_USERNAME')
+app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('BASIC_AUTH_PASSWORD')
 
 basic_auth = BasicAuth(app)
 
@@ -37,4 +38,4 @@ def cotacao():
     return jsonify(preco=preco[0])
 
 
-app.run(debug=True)
+app.run(debug=True, host='0.0.0.0')
