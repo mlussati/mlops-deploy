@@ -3,6 +3,7 @@ env: flex
 entrypoint: gunicorn -b :$PORT endpoint:app
 
 runtime_config:
-  python_version:3
+  python_version: 3
+
 includes:
 - env_vars.yaml
